@@ -1,0 +1,7 @@
+{
+  "name": "OpenAiChat",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
