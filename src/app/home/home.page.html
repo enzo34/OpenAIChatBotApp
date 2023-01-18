@@ -1,33 +1,60 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      OpenAi Chat
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-menu contentId="main-content">
+  <ion-header [translucent]="true">
     <ion-toolbar>
-      <ion-title size="large">OpenAi Chat</ion-title>
+      <ion-title>
+        OpenAi Chat
+      </ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-list>
-    <ion-item *ngFor="let item of chatBot">
-      <ion-label fill="outline">
-        <ion-text color="primary" class="ion-text-wrap ion-float-right" >
-          <h2>{{item.question}}</h2>
-        </ion-text>
-        <ion-text color="secondary" [innerHtml]="item.response" class="e2e-inner-html-bound ion-text-wrap ion-float-left">
-        </ion-text>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-</ion-content>
+  <ion-content class="ion-padding">
+    <ion-label>Sélection du model</ion-label>
+    <ion-accordion-group>
+      <ion-accordion value="first">
+        <ion-item slot="header" color="light">
+          <ion-label>
+            {{ selectedModel }}
+            </ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content" *ngFor="let model of listModels?.data">
+          <p (click)="selectModel(model)">{{model.id}}</p>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">OpenAi Chat</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-list>
+      <ion-item *ngFor="let item of chatBot">
+        <ion-label fill="outline">
+          <ion-text color="primary" class="ion-text-wrap ion-float-right">
+            <h2>{{item.question}}</h2>
+          </ion-text>
+          <ion-text color="secondary" [innerHtml]="item.response"
+            class="e2e-inner-html-bound ion-text-wrap ion-float-left">
+          </ion-text>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 
-<ion-footer collapse="fade">
-  <ion-toolbar *ngIf="!disabled">
-    <ion-input [(ngModel)]="question" placeholder="Ask a question"></ion-input>
-    <ion-button (click)="sendQuestion()" type="submit">Send</ion-button>
-  </ion-toolbar>
-</ion-footer>
+  <ion-footer collapse="fade">
+    <ion-toolbar *ngIf="!disabled">
+      <ion-input [(ngModel)]="question" placeholder="Ask a question"></ion-input>
+      <ion-button (click)="sendQuestion()" type="submit">Send</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</div>

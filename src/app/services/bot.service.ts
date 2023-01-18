@@ -10,7 +10,12 @@ export class BotService {
 
   constructor(private http: HttpClient) {}
 
-  public getResponse(question: any) {
-    return this.http.post<ResponseApi>(environment.urlApi, {input: question});
+  public getResponse(question: any, selectedModel: any) {
+    console.log(question, selectedModel)
+    return this.http.post<ResponseApi>(environment.urlApi, {input: question, model: selectedModel});
+  }
+
+  public getModels() {
+    return this.http.get<any>(environment.urlApi + '/models');
   }
 }
