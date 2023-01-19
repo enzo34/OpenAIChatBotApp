@@ -37,15 +37,15 @@
         <ion-title size="large">OpenAi Chat</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-list>
+    <ion-list *ngIf="chatBot.length > 0">
       <ion-item *ngFor="let item of chatBot">
         <ion-label fill="outline">
-          <ion-text color="primary" class="ion-text-wrap ion-float-right">
+          <ion-text color="primary" class="ion-text-wrap ion-float-left">
             <h2>{{item.question}}</h2>
           </ion-text>
-          <ion-text color="secondary" [innerHtml]="item.response"
-            class="e2e-inner-html-bound ion-text-wrap ion-float-left">
-          </ion-text>
+          <p style="color: #4b4b4b" [innerHtml]="item.response"
+            class="e2e-inner-html-bound ion-text-wrap ion-float-right">
+        </p>
         </ion-label>
       </ion-item>
     </ion-list>
@@ -53,8 +53,8 @@
 
   <ion-footer collapse="fade">
     <ion-toolbar *ngIf="!disabled">
-      <ion-input [(ngModel)]="question" placeholder="Ask a question"></ion-input>
-      <ion-button (click)="sendQuestion()" type="submit">Send</ion-button>
+      <ion-input [(ngModel)]="question" placeholder="Posez une question"></ion-input>
+      <ion-button (click)="sendQuestion()" type="submit">Envoyez</ion-button>
     </ion-toolbar>
   </ion-footer>
 </div>

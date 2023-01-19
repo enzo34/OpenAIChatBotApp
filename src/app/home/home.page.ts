@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonContent, ToastController } from '@ionic/angular';
 import { BotService } from '../services/bot.service';
 import { UtilsService } from '../services/utils.service';
+import { ChatBot } from './model/ChatBot';
 
 
 @Component({
@@ -13,14 +14,7 @@ export class HomePage implements OnInit {
   @ViewChild(IonContent, { static: true }) content!: IonContent;
   disabled: boolean = false;
 
-  chatBot = [
-    {
-      question: 'Bonjour, je suis une IA de la société OpenAI. Comment puis-je vous aider?'
-    },
-    {
-      response: 'Bonjour je suis un utilisateur de votre application'
-    }
-  ];
+  chatBot: ChatBot[] = [];
 
   question = '';
   listModels: any;
@@ -36,16 +30,23 @@ export class HomePage implements OnInit {
   }
 
   async sendQuestion() {
+    let q = this.question;
     if (this.question === '') {
       this.utils.presentToast("Le message ne peut être vide", 'danger')
     } else {
-      this.chatBot.push({ question: this.question });
-      this.botService.getResponse(this.question, this.selectedModel).subscribe(res => {
-        this.chatBot.push({ response: res.message });
+      this.disabled = true;
+
+      await this.botService.getResponse(this.question, this.selectedModel).subscribe(res => {
+        console.log(q)
+        this.chatBot.push(new ChatBot(q, res.message.replace(/\n/g, "<br/>")));
+        console.log(this.chatBot)
         this.content.scrollToBottom();
+      }, err => {
+        this.utils.presentToast("Une erreur c'est produite au niveau de l'API veuillez réessayez d'ici quelques minutes", "danger")
       });
 
       this.question = '';
+      this.disabled = false
     }
   }
 

@@ -29,6 +29,10 @@
 Dark Mode
 ***/
 ion-content {
-    --ion-background-color: #333;
+    --ion-background-color: #4b4b4b;
     color: #fff;
+}
+
+ion-toolbar {
+    --background: #2e2d2d
 }
